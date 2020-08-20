@@ -19,7 +19,47 @@ paths:
       summary: weather
       tags:
         - Weather endpoints
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  coord:
+                    type:
+                      - string
+                      - object
+                    properties:
+                      lon:
+                        type: number
+                        example: 0
+                      lat:
+                        type: number
+                  name:
+                    type: string
+                  id:
+                    type: number
+                  timezone:
+                    type: number
+                    description: The timezone for the station
+              examples:
+                example-1:
+                  value:
+                    coord:
+                      lon: 124.52
+                      lat: 84.63
+                    name: string
+                    id: 0
+                    timezone: 0
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/unauth_response'
       operationId: get-weather
       description: get weather
       security:
@@ -38,7 +78,20 @@ paths:
             **City ID**: *Example: 234562
     parameters: []
 components:
-  schemas: {}
+  schemas:
+    unauth_response:
+      title: 401
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        cod:
+          type: integer
+      required:
+        - id
+        - message
   securitySchemes:
     app_id:
       name: appid
